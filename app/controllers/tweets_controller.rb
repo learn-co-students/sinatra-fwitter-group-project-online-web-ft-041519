@@ -1,28 +1,33 @@
 class TweetsController < ApplicationController
 
   get '/tweets/new' do
-    erb :new
+    erb :'tweets/new'
+  end
+
+  get '/tweets' do
+    binding.pry
+    @tweets = Tweet.all
+    erb :'tweets/index'
   end
 
   post '/tweets' do
     tweet = Tweet.create(content: params["content"])
-    tweet.save
     @tweets = Tweet.all
-    erb :index
+    erb :'tweets/index'
   end
 
   get '/tweets/:id' do
     @tweet = Tweet.find_by(id: params[:id])
-    erb :show
+    erb :'tweets/show'
   end
 
   get '/tweets/:id/edit' do
     @tweet = Tweet.find_by(id: params[:id])
-    erb :edit
+    erb :'tweets/edit'
   end
 
   post '/tweets/:id/delete' do
-    erb :tweets
+    redirect '/tweets'
   end
 
 end
