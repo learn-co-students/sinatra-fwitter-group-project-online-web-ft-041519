@@ -1,1 +1,15 @@
-<%= @tweet.content %>
+<% if Helpers.is_logged_in?(session) %>
+<%= @error %>
+
+  <h3><%= @tweet.content %></h3>
+
+  <a href="/tweets/:id/edit">Edit Tweet</a>
+
+  <form method="post" action="/tweets/<%= @tweet.id %>">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <input type="submit" value="delete">
+</form>
+
+  <% else %>
+      <h1> You Must Be Logged in to See Tweets </h1>
+  <% end %>
