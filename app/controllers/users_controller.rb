@@ -33,7 +33,6 @@ class UsersController < ApplicationController
   end
   
   post '/login' do
-    #binding.pry
     user = User.find_by(username: params[:username])
 
     if user && user.authenticate(params[:password])
@@ -45,8 +44,12 @@ class UsersController < ApplicationController
   end
   
   get '/logout' do
-    #if logged_in? session.clear or session.destroy, redirect to '/login'
-    #else redirect '/'
+    if is_logged_in?
+      session.clear
+      redirect to '/login'
+    else
+      redirect to '/'
+    end
   end
   
 
