@@ -19,19 +19,47 @@ class TweetsController < ApplicationController
   end
 
   post '/tweets' do
-    tweet = Tweet.create(content: params["content"])
-    @tweets = Tweet.all
-    erb :'tweets/index'
+    if logged_in?
+      if params["content"] == ""
+        redirect '/tweets/new'
+      else
+        tweet = Tweet.create(content: params["content"], user_id: session[:user_id])
+        @user = User.find_by(id: tweet.user_id)
+        @tweets = @user.tweets
+        erb :'tweets/index'
+      end
+    else
+      redirect '/login'
+    end
   end
 
   get '/tweets/:id' do
-    @tweet = Tweet.find_by(id: params[:id])
-    erb :'tweets/show'
+    if logged_in?
+      @tweet = Tweet.find_by(id: params[:id])
+      erb :'tweets/show'
+    else
+      redirect '/login'
+    end
   end
 
   get '/tweets/:id/edit' do
-    @tweet = Tweet.find_by(id: params[:id])
-    erb :'tweets/edit'
+    if logged_in?
+      @tweet = Tweet.find_by(id: params[:id])
+      erb :'tweets/edit'
+    else
+      redirect '/login'
+    end
+  end
+
+  patch '/tweets/:id' do
+    if logged_in?
+      binding.pry
+      @tweet = Tweet.find_by(id: params[:id])
+      @tweet.update(content: params["content"])
+      redirect '/tweets/:id'
+    else
+      redirect '/login'
+    end
   end
 
   post '/tweets/:id/delete' do
