@@ -1,9 +1,7 @@
 <h1>Welcome, <%= @user.username %></h1>
 
-<%  @tweets.each do |x| %>
+Tweets: <% @tweets.each do |x| %>
 <%= x.content %>
 <% end %>
-
-
-
+  
 

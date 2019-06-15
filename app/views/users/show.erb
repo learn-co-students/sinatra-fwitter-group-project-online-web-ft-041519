@@ -1,4 +1,13 @@
 <h1>User Tweets</h1>
-<%  Tweet.all.each |x| do %>
+
+<%  current_user.tweets.each do |x| %>
 <%= x.content %>
 <% end %>
+
+Delete Tweet 
+<form action="/tweets/<%= current_user.id %>/delete" method="post">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <input type="submit" id="Delete Tweet"value="delete">
+</form>
+
+Edit Tweet

@@ -1,0 +1,11 @@
+<h1>Edit Tweets</h1>
+
+<% current_user.tweets.each do |x|%>
+<%= x.content %>
+<% end %>
+
+<form action="/tweets/<%= current_user.id %>" method="post">
+  <input id="hidden" type="hidden" name="_method" value="patch">
+  <input type="text" name="content">
+  <input type="submit" id='submit 'value="submit">
+</form>
