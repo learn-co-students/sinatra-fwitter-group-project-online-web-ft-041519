@@ -4,4 +4,9 @@ class User < ActiveRecord::Base
   validates :email, presence: true
   
   has_secure_password
+  
+  def slug 
+    self.username
+  end 
+
 end
